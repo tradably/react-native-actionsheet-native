@@ -9,7 +9,7 @@ To implement the Android version I used [android-ActionSheet](https://github.com
 
 ## Installing React Native ActionSheet
 ```bash
-npm install react-native-actionsheet
+npm install react-native-actionsheet --save
 ```
 
 # Android
