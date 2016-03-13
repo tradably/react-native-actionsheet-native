@@ -1,13 +1,9 @@
 {
-  "name": "react-native-actionsheet",
+  "name": "react-native-actionsheet-native",
   "version": "0.0.1",
   "description": "Android ActionSheet support for React Native",
   "main": "index.js",
-  "author": {
-    "name": "Ladislav Martincik",
-    "email": "ladislav@slowpath.com",
-    "url": "http://github.com/martincik"
-  },
+  "author": "Ladislav Martincik <ladislav@slowpath.com> (http://github.com/martincik)",
   "peerDependencies": {
     "react-native": ">=0.21.0"
   },
@@ -18,6 +14,16 @@
     "actionsheet",
     "react native",
     "react native actionsheet"
-   ],
-  "license": "BSD License"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slowpath/react-native-actionsheet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/slowpath/react-native-actionsheet/issues"
+  }
 }

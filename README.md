@@ -9,7 +9,7 @@ To implement the Android version I used [android-ActionSheet](https://github.com
 
 ## Installing React Native ActionSheet
 ```bash
-npm install react-native-actionsheet --save
+npm install react-native-actionsheet-native --save
 ```
 
 # Android
@@ -17,8 +17,8 @@ npm install react-native-actionsheet --save
 
 ```gradle
 ...
-include ':react-native-actionsheet', ':app'
-project(':react-native-actionsheet').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-actionsheet/android')
+include ':react-native-actionsheet-native', ':app'
+project(':react-native-actionsheet-native').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-actionsheet-native/android')
 ```
 
 * In `android/app/build.gradle`
