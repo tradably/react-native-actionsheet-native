@@ -6,4 +6,6 @@ import ActionSheetAndroid from './ActionSheetAndroid';
 
 var ActionSheet = Platform.OS === 'ios' ? ActionSheetIOS : ActionSheetAndroid;
 
-export default ActionSheet;
+//export default ActionSheet;
+
+module.exports = ActionSheet;

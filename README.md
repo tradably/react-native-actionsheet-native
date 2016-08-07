@@ -60,7 +60,7 @@ public class MainActivity extends ReactActivity {
 From your JS files for both iOS and Android:
 
 ```js
-var ActionSheet = require('react-native-actionsheet');
+var ActionSheet = require('react-native-actionsheet-native');
 
 ActionSheet.showActionSheetWithOptions({
   options: [`Disconnect`, 'Cancel'],
