@@ -1,8 +1,6 @@
 package com.slowpath.actionsheet;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.react.ReactFragmentActivity;
 import com.facebook.react.bridge.Callback;
@@ -13,13 +11,18 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Nullable;
 import com.baoyz.actionsheet.ActionSheet;
 
 public class ActionSheetModule extends ReactContextBaseJavaModule implements ActionSheet.ActionSheetListener {
 
-    private static final String MODULE_NAME = "ActionSheetAndroid";
+    private static final int RESULT_CANCEL = -1;
+    private static final int RESULT_ERROR = -2;
+
     private ReactFragmentActivity activity;
     private Callback callback;
     private ReactApplicationContext context;
@@ -27,18 +30,31 @@ public class ActionSheetModule extends ReactContextBaseJavaModule implements Act
     public ActionSheetModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.context = reactContext;
-        this.activity = (ReactFragmentActivity) reactContext.getCurrentActivity();
         this.callback = null;
     }
 
     @Override
     public String getName() {
-        return MODULE_NAME;
+        return "ActionSheetAndroid";
+    }
+
+    public @Nullable Map<String, Object> getConstants() {
+        Map<String, Object> constants = new HashMap<>();
+
+        constants.put("RESULT_CANCEL", RESULT_CANCEL);
+        constants.put("RESULT_ERROR", RESULT_ERROR);
+
+        return constants;
     }
 
     @ReactMethod
     public void showActionSheetWithOptions(ReadableMap params, Callback callback) {
-
+        final Activity currentActivity = getCurrentActivity();
+        if (currentActivity == null || !(currentActivity instanceof ReactFragmentActivity)) {
+            this.callback.invoke(RESULT_ERROR);
+            return;
+        }
+        this.activity = (ReactFragmentActivity) currentActivity;
         this.callback = callback;
         int cancelButtonIndex = params.getInt("cancelButtonIndex");
         ReadableArray options = params.getArray("options");
@@ -71,7 +87,7 @@ public class ActionSheetModule extends ReactContextBaseJavaModule implements Act
     @Override
     public void onDismiss(ActionSheet actionSheet, boolean isCancle) {
       if (callback != null && isCancle) {
-        callback.invoke(-1);
+        callback.invoke(RESULT_CANCEL);
       }
     }
 
