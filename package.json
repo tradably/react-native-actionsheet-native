@@ -1,6 +1,6 @@
 {
   "name": "react-native-actionsheet-native",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Android ActionSheet support for React Native",
   "main": "index.js",
   "author": "Ladislav Martincik <ladislav@slowpath.com> (http://github.com/martincik)",
