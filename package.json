@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "Ladislav Martincik <ladislav@slowpath.com> (http://github.com/martincik)",
   "peerDependencies": {
-    "react-native": ">=0.21.0"
+    "react-native": ">=0.40.0"
   },
   "homepage": "http://github.com/slowpath/react-native-actionsheet/",
   "keywords": [

@@ -1,19 +1,35 @@
 # React Native ActionSheet
-React Native ActionSheet is a JavaScript library for [React Native](https://facebook.github.io/react-native/) that implements AcionSheet for Android. Its equivalent to ActionSheetIOS which is part of React Native.
 
-To implement the Android version I used [android-ActionSheet](https://github.com/baoyongzhang/android-ActionSheet).
+React Native ActionSheet is a JavaScript library for [React Native](https://facebook.github.io/react-native/) that implements AcionSheet for Android. Its equivalent of ActionSheetIOS which is part of React Native.
+
+For implementation the Android version I used [android-ActionSheet](https://github.com/baoyongzhang/android-ActionSheet).
 
 ## Requirements
-* React Native >= 0.21.0
-* Android
+
+- React Native >= 0.40.0
+- Android
 
 ## Installing React Native ActionSheet
+
 ```bash
 npm install react-native-actionsheet-native --save
+# OR
+yarn add react-native-actionsheet-native
 ```
 
-# Android
-* In `android/setting.gradle`
+## Preparing
+
+### React native >= 0.40.0
+
+You can run inside of your project folder the next command:
+
+```bash
+react-native link react-native-actionsheet-native
+```
+
+### React native >= 0.33.0 AND < 0.40.0
+
+- In `android/setting.gradle`
 
 ```gradle
 ...
@@ -21,32 +37,31 @@ include ':react-native-actionsheet-native', ':app'
 project(':react-native-actionsheet-native').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-actionsheet-native/android')
 ```
 
-* In `android/app/build.gradle`
+- In `android/app/build.gradle`
 
 ```gradle
 apply plugin: "com.android.application"
 ...
 dependencies {
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"
-    compile project(":react-native-actionsheet") // <--- add this
+  ...
+  compile project(":react-native-actionsheet") // <--- add this
+  ...
 }
 ```
 
-* Register Module (in MainActivity.java)
+- Register Module (in MainActivity.java)
 
 ```java
-import com.slowpath.actionsheet.ActionSheetModule;   // <--- import this
 import com.slowpath.actionsheet.ActionSheetPackage;  // <--- import and this
 
-public class MainActivity extends ReactActivity {
+public class MyApplication extends Application implements ReactApplication {
+
   ......
 
   @Override
   protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-      new ActionSheetPackage(this), // <------ add this line to yout MainActivity class
+    return Arrays.asList(
+      new ActionSheetPackage(), // <------ add this line to you application
       new MainReactPackage());
   }
 
@@ -55,15 +70,25 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
+### Updated your MainActivity
+
+Now, you need to update your MainActivity. The MainActivity should extends `ReactFragmentActivity` for working with this library.
+
+```java
+public class MainActivity extends ReactFragmentActivity {
+  ...
+}
+```
+
 # Usage
 
 From your JS files for both iOS and Android:
 
-```js
-import ActionSheet from 'react-native-actionsheet-native';
+```javascript
+import ActionSheet from 'react-native-actionsheet';
 
 ActionSheet.showActionSheetWithOptions({
-  options: [`Disconnect`, 'Cancel'],
+  options: ['Disconnect', 'Cancel'],
   cancelButtonIndex: 1
 },
 (buttonIndex) => {
@@ -72,8 +97,12 @@ ActionSheet.showActionSheetWithOptions({
     // Do something.
   }
 });
-
 ```
 
+# Customization of Android action sheet
+
+If you want to customize view of Android ActionSheet, you will need to read [this article](https://github.com/baoyongzhang/android-ActionSheet#style)
+
 ## License
+
 React Native ActionSheet is BSD-licensed.
