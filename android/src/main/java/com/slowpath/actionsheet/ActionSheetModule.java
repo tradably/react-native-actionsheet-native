@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class ActionSheetModule extends ReactContextBaseJavaModule implements Act
     private static final int RESULT_CANCEL = -1;
     private static final int RESULT_ERROR = -2;
 
-    private ReactFragmentActivity activity;
+    private FragmentActivity activity;
     private Callback callback;
     private ReactApplicationContext context;
 
@@ -50,13 +51,15 @@ public class ActionSheetModule extends ReactContextBaseJavaModule implements Act
     @ReactMethod
     public void showActionSheetWithOptions(ReadableMap params, Callback callback) {
         final Activity currentActivity = getCurrentActivity();
-        if (currentActivity == null || !(currentActivity instanceof ReactFragmentActivity)) {
+        if (currentActivity == null || !(currentActivity instanceof FragmentActivity)) {
             this.callback.invoke(RESULT_ERROR);
             return;
         }
-        this.activity = (ReactFragmentActivity) currentActivity;
+        this.activity = (FragmentActivity) currentActivity;
         this.callback = callback;
         int cancelButtonIndex = params.getInt("cancelButtonIndex");
+        boolean cancelOnTouchOutside = params.getBoolean("cancelOnTouchOutside");
+        
         ReadableArray options = params.getArray("options");
         List<String> list = new ArrayList<>(options.size());
         String cancelButtonName = options.getString(cancelButtonIndex);
@@ -73,7 +76,7 @@ public class ActionSheetModule extends ReactContextBaseJavaModule implements Act
         ActionSheet.createBuilder(context, activity.getSupportFragmentManager())
                   .setCancelButtonTitle(cancelButtonName)
                   .setOtherButtonTitles(list.toArray(args))
-                  .setCancelableOnTouchOutside(false)
+                  .setCancelableOnTouchOutside(cancelOnTouchOutside)
                   .setListener(this).show();
     }
 
